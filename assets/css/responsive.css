@@ -1,12 +1,6 @@
 /* ====================================================
    DAMEYO — responsive.css
-   Media queries — approche mobile-first
-
-   Breakpoints :
-     Tablette  : max-width 1024px
-     Mobile    : max-width 768px  ← bascule hero desktop/mobile
-     Petit mob.: max-width 480px
-     Grand éc. : min-width 1400px
+   Breakpoints : 1024px / 768px / 480px / 1400px
 ==================================================== */
 
 
@@ -16,152 +10,137 @@
 
 @media (max-width: 1024px) {
 
-  /* Menu : une seule colonne */
-  .menu-cards {
+  .menu-cards   { grid-template-columns: 1fr; }
+  .offers__grid { grid-template-columns: 1fr; max-width: 580px; margin: 0 auto; }
+
+  /* Avis : score au-dessus en ligne, cards en dessous */
+  .reviews__inner {
     grid-template-columns : 1fr;
+    gap                   : 1.5rem;
   }
 
-  /* Offres : une seule colonne centrée */
-  .offers__grid {
-    grid-template-columns : 1fr;
-    max-width             : 580px;
-    margin                : 0 auto;
+  .reviews__summary {
+    flex-direction  : row;
+    justify-content : center;
+    flex-wrap       : wrap;
+    gap             : 1.2rem;
+    padding         : 1rem 1.5rem;
+    position        : static;
+    text-align      : left;
   }
 
-  /* Contact : une seule colonne */
-  .contact__grid {
-    grid-template-columns : 1fr;
-    gap                   : 3rem;
-  }
+  .reviews__score { font-size: 3.5rem; }
+  .reviews__grid  { grid-template-columns: repeat(3, 1fr); }
 
-  /* Avis : deux colonnes */
-  .reviews__grid {
-    grid-template-columns : 1fr 1fr;
-  }
+  .contact__grid { grid-template-columns: 1fr; gap: 2rem; }
+  .contact__map  { height: 260px; }
 
 }
 
 
 /* ====================================================
    MOBILE — max-width : 768px
-   Bascule hero desktop ↔ hero mobile
 ==================================================== */
 
 @media (max-width: 768px) {
 
-  /* ── Sécurité anti-overflow global ── */
-  * {
-    max-width : 100%;
-  }
+  /* Sécurité anti-overflow */
+  * { max-width: 100%; }
+  video, iframe { max-width: none; }
 
-  /* Éléments qui peuvent légitimement dépasser */
-  video, iframe {
-    max-width : none;
-  }
-
-  /* ── Bascule hero ── */
+  /* Hero : bascule desktop → mobile */
   .hero-desktop { display: none !important; }
   .hero-mobile  { display: flex !important; }
 
-  /* ── Navbar burger ── */
+  /* Navbar burger */
   .navbar__links {
     position        : fixed;
-    top             : 0;
-    right           : 0;
+    top: 0; right: 0;
     height          : 100vh;
-    width           : 70vw;
-    max-width       : 300px;
+    width           : 70vw; max-width: 300px;
     background      : var(--black);
-    border-left     : 2px solid rgba(245, 166, 35, 0.3);
+    border-left     : 2px solid rgba(245,166,35,.3);
     flex-direction  : column;
     justify-content : center;
     align-items     : center;
     gap             : 3rem;
     transform       : translateX(100%);
-    transition      : transform 0.4s ease;
+    transition      : transform .4s ease;
     z-index         : 999;
   }
-
   .navbar__links.open { transform: translateX(0); }
   .navbar__burger     { display: flex; }
   .nav-link           { font-size: 1.8rem; }
 
-  /* ── Intro : horizontal et compact sur mobile ── */
-  .intro {
-    padding : 2.5rem 1.2rem;
-  }
+  /* Section headers */
+  .section-header { margin-bottom: 1.8rem; }
+  .section-title  { font-size: 2rem; }
 
+  /* Intro : cards horizontales compactes */
+  .intro { padding: 2.2rem 1.2rem; }
   .intro__grid {
     grid-template-columns : 1fr;
-    gap                   : 0.75rem;
+    gap                   : 0.7rem;
     max-width             : 480px;
     margin                : 0 auto;
   }
-
-  /* Layout horizontal : emoji à gauche, texte à droite */
   .intro__block {
     display     : flex;
     align-items : center;
     text-align  : left;
-    padding     : 1rem 1.2rem;
+    padding     : 0.9rem 1.1rem;
     gap         : 1rem;
   }
-
-  .intro__icon {
-    font-size   : 2rem;
-    flex-shrink : 0;
-    margin      : 0;
-    line-height : 1;
-  }
-
+  .intro__icon       { font-size: 1.9rem; flex-shrink: 0; margin: 0; line-height: 1; }
   .intro__block-text { flex: 1; min-width: 0; }
+  .intro__block h3   { font-size: 1.1rem; margin-bottom: 0.1rem; }
+  .intro__block p    { font-size: 0.78rem; line-height: 1.4; }
 
-  .intro__block h3 {
-    font-size     : 1.2rem;
-    margin-bottom : 0.15rem;
-  }
+  /* Menu */
+  .menu-section { padding: 2.8rem 1.2rem; }
+  .menu-tabs    { gap: 0.4rem; }
+  .menu-tab     { font-size: 0.78rem; padding: 0.38rem 0.9rem; }
 
-  .intro__block p {
-    font-size   : 0.8rem;
-    line-height : 1.4;
-  }
-
-  /* ── Offres : ratio fixe, image contenue ── */
+  /* Offres */
+  .offers { padding: 2.8rem 1.2rem; }
   .offers__grid {
     grid-template-columns : 1fr;
-    gap                   : 1.5rem;
-    max-width             : 480px;
-    margin                : 0 auto;
+    gap                   : 1rem;
+    max-width             : 480px; margin: 0 auto;
   }
-
   .offer-card {
-    aspect-ratio    : 16 / 9;
+    aspect-ratio    : 16/9;
     display         : flex;
     align-items     : center;
     justify-content : center;
   }
+  .offer-card img { max-height: 100%; width: auto; max-width: 100%; object-fit: contain; }
 
-  .offer-card img {
-    max-height  : 100%;
-    width       : auto;
-    max-width   : 100%;
-    object-fit  : contain;
-  }
-
-  /* ── Avis : colonne unique ── */
-  .reviews__grid { grid-template-columns: 1fr; }
-
-  /* ── Footer centré ── */
-  .footer__inner {
-    flex-direction : column;
-    text-align     : center;
-  }
-
-  .footer__nav {
+  /* Avis : empilé */
+  .reviews { padding: 2.8rem 1.2rem; }
+  .reviews__inner  { grid-template-columns: 1fr; gap: 1rem; }
+  .reviews__summary {
+    flex-direction  : row;
     flex-wrap       : wrap;
     justify-content : center;
-    gap             : 1rem;
+    gap             : 0.8rem;
+    padding         : 0.8rem 1rem;
+    position        : static;
   }
+  .reviews__score { font-size: 2.5rem; }
+  .reviews__stars { font-size: 0.9rem; }
+  .reviews__count { font-size: 0.68rem; }
+  .reviews__grid  { grid-template-columns: 1fr; gap: 0.7rem; }
+
+  /* Contact */
+  .contact { padding: 2.8rem 1.2rem; }
+  .contact__grid { grid-template-columns: 1fr; gap: 1.4rem; }
+  .contact__map  { height: 210px; }
+  .contact__info { gap: 1rem; }
+
+  /* Footer */
+  .footer__inner { flex-direction: column; text-align: center; gap: 0.5rem; }
+  .footer__nav   { flex-wrap: wrap; justify-content: center; gap: 1rem; }
 
 }
 
@@ -172,23 +151,12 @@
 
 @media (max-width: 480px) {
 
-  .section-title { font-size: 2.2rem; }
+  .section-title { font-size: 1.75rem; }
 
-  .menu-tab {
-    font-size : 0.85rem;
-    padding   : 0.5rem 1.2rem;
-  }
+  .halal-stamp-mobile .halal-stamp__main { font-size: 1.05rem; letter-spacing: 0.06em; }
+  .halal-stamp-mobile .halal-stamp__sub  { font-size: 0.55rem; letter-spacing: 0.02em; }
 
-  /* Badge Halal encore plus compact */
-  .halal-stamp-mobile .halal-stamp__main {
-    font-size      : 1.2rem;
-    letter-spacing : 0.08em;
-  }
-
-  .halal-stamp-mobile .halal-stamp__sub {
-    font-size      : 0.6rem;
-    letter-spacing : 0.04em;
-  }
+  .seasonal-banner { font-size: 0.72rem; padding: 0.35rem 0.9rem; }
 
 }
 
@@ -199,9 +167,8 @@
 
 @media (min-width: 1400px) {
 
-  .menu-cards   { gap: 3rem; }
-  .offers__grid { gap: 4rem; }
-
-  .contact__map { height: 500px; }
+  .offers__grid   { max-width: 1200px; }
+  .reviews__inner { max-width: 1200px; margin: 0 auto; }
+  .contact__map   { height: 360px; }
 
 }

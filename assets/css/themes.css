@@ -1,0 +1,338 @@
+/* ====================================================
+   DAMEYO — themes.css
+   Thèmes saisonniers automatiques
+
+   Fonctionnement :
+     Le thème est activé en ajoutant une classe sur <html> :
+       <html class="theme-noel">
+       <html class="theme-ete">
+       etc.
+     
+     Le JS (themes.js) détecte la date et applique
+     automatiquement le bon thème.
+
+   Thèmes disponibles :
+     .theme-noel      Déc 1 → Jan 6     Rouge/Or/Sapin
+     .theme-galette   Jan 7 → Jan 31    Crème/Or/Violet
+     .theme-ete       Jul 1 → Aug 31    Soleil/Turquoise
+     .theme-halloween Oct 1 → Oct 31    Orange/Noir/Violet
+     .theme-default   Reste de l'année  Charte Dameyo originale
+==================================================== */
+
+
+/* ====================================================
+   THÈME NOËL — Déc 1 → Jan 6
+   Ambiance : rouge profond, or chaud, vert sapin
+   "Le Goût Qui Claque... sous le sapin 🎄"
+==================================================== */
+
+html.theme-noel {
+  --gold      : #E8A020;
+  --green     : #2D6A4F;
+  --black     : #0D0D0D;
+  --dark      : #130A08;
+  --grey      : #1A0F0D;
+  --mobile-bg : #0D0D0D; /* sync avec --black → gradient invisible */
+}
+
+/* Fond avec grain de neige sur les sections header */
+html.theme-noel .section-header .section-label { color: #C41E3A; } /* rouge noël */
+html.theme-noel .section-title::after          { background: #C41E3A; }
+html.theme-noel .section-header:hover .section-title::after { background: var(--gold); }
+
+/* Navbar bordure rouge */
+html.theme-noel .navbar.scrolled { border-bottom-color: rgba(196,30,58,.3); }
+
+/* Hero slide — filet rouge en haut */
+html.theme-noel .hero-desktop__slide-panel::after,
+html.theme-noel .hero-mobile__video::after {
+  background: linear-gradient(90deg, transparent, #C41E3A, var(--gold), transparent);
+}
+
+/* Titre claque en rouge/or */
+html.theme-noel .hero-slide-content__title span,
+html.theme-noel .hero-mobile__title span { color: #C41E3A; }
+
+/* Trait sous le titre */
+html.theme-noel .hero-slide-content__title::after,
+html.theme-noel .hero-mobile__title::after {
+  background: linear-gradient(90deg, #C41E3A, var(--gold));
+}
+
+/* Badge Halal — sapin vert */
+html.theme-noel .halal-stamp__sub,
+html.theme-noel .halal-stamp-mobile .halal-stamp__sub {
+  background : #2D6A4F;
+  color      : #fff;
+}
+
+html.theme-noel .halal-stamp__main,
+html.theme-noel .halal-stamp-mobile .halal-stamp__main {
+  border-color : #C41E3A;
+  color        : #C41E3A;
+  box-shadow   : 4px 4px 0 rgba(196,30,58,.4);
+}
+
+html.theme-noel .halal-stamp__sub,
+html.theme-noel .halal-stamp-mobile .halal-stamp__sub {
+  border-color : #C41E3A;
+  box-shadow   : 4px 4px 0 rgba(196,30,58,.4);
+}
+
+/* Onglets actifs */
+html.theme-noel .menu-tab.active   { background: #C41E3A; border-color: #C41E3A; }
+html.theme-noel .menu-tab:hover    { border-color: #C41E3A; }
+
+/* Offres */
+html.theme-noel .offers::before {
+  background: linear-gradient(90deg, transparent, #2D6A4F, #C41E3A, transparent);
+}
+
+/* Bouton CTA */
+html.theme-noel .btn--primary { background: #C41E3A; }
+html.theme-noel .btn--primary:hover { box-shadow: 0 0 30px rgba(196,30,58,.5); }
+
+/* Badge "Limité" */
+html.theme-noel .offer-card__badge { background: #C41E3A; }
+
+/* Intro blocs */
+html.theme-noel .intro {
+  border-top-color : #C41E3A;
+  background       : var(--grey);
+}
+
+html.theme-noel .intro__block::before {
+  background: linear-gradient(90deg, #C41E3A, var(--gold));
+}
+
+html.theme-noel .intro__block h3 { color: #C41E3A; }
+
+/* Contact socials */
+html.theme-noel .social-btn        { border-color: #C41E3A; color: #C41E3A; }
+html.theme-noel .social-btn:hover  { background: #C41E3A; color: #fff; }
+
+/* Lien avis */
+html.theme-noel .reviews__cta a         { border-color: #C41E3A; color: #C41E3A; }
+html.theme-noel .reviews__cta a:hover   { background: #C41E3A; color: #fff; }
+
+/* Bannière saisonnière */
+html.theme-noel .seasonal-banner {
+  background : linear-gradient(135deg, #0D0D0D 0%, #1A0A08 50%, #0D0D0D 100%);
+  border-color: #C41E3A;
+}
+
+html.theme-noel .seasonal-banner__emoji { animation: snowFall 3s ease-in-out infinite; }
+
+/* Nav active */
+html.theme-noel .nav-link::after        { background: #C41E3A; }
+html.theme-noel .nav-link:hover,
+html.theme-noel .nav-link.active        { color: #C41E3A; }
+
+
+/* ====================================================
+   THÈME GALETTE — Jan 7 → Jan 31
+   Fève d'or, couronne, crème chaude
+==================================================== */
+
+html.theme-galette {
+  --gold      : #D4A017;
+  --green     : #8B6914;
+  --mobile-bg : #111111;
+}
+
+html.theme-galette .section-label { color: #8B6914; }
+html.theme-galette .intro__block h3 { color: var(--gold); }
+
+html.theme-galette .seasonal-banner {
+  background  : linear-gradient(135deg, #111 0%, #1a1408 50%, #111 100%);
+  border-color: var(--gold);
+}
+
+
+/* ====================================================
+   THÈME ÉTÉ — Jul 1 → Août 31
+   Soleil, turquoise, vacances
+==================================================== */
+
+html.theme-ete {
+  --gold      : #FF9500;
+  --green     : #00BFA6;
+  --mobile-bg : #111111;
+}
+
+html.theme-ete .hero-slide-content__title span,
+html.theme-ete .hero-mobile__title span { color: #FF9500; }
+
+html.theme-ete .seasonal-banner {
+  background  : linear-gradient(135deg, #111 0%, #0D1A18 50%, #111 100%);
+  border-color: #00BFA6;
+}
+
+html.theme-ete .section-label { color: #00BFA6; }
+html.theme-ete .intro__block::before { background: linear-gradient(90deg, #FF9500, #00BFA6); }
+
+
+/* ====================================================
+   THÈME HALLOWEEN — Oct 1 → Oct 31
+   Orange citrouille, violet, noir profond
+==================================================== */
+
+html.theme-halloween {
+  --gold      : #FF6B00;
+  --green     : #7B2FBE;
+  --dark      : #0A0010;
+  --grey      : #130020;
+  --mobile-bg : #111111; /* pas de --black custom → garder noir standard */
+}
+
+html.theme-halloween .hero-slide-content__title span,
+html.theme-halloween .hero-mobile__title span { color: #FF6B00; }
+
+html.theme-halloween .section-label  { color: #7B2FBE; }
+html.theme-halloween .menu-tab.active { background: #FF6B00; border-color: #FF6B00; }
+html.theme-halloween .btn--primary    { background: #FF6B00; }
+
+html.theme-halloween .seasonal-banner {
+  background  : linear-gradient(135deg, #0A0010 0%, #130020 50%, #0A0010 100%);
+  border-color: #FF6B00;
+}
+
+html.theme-halloween .intro__block::before {
+  background: linear-gradient(90deg, #FF6B00, #7B2FBE);
+}
+
+html.theme-halloween .intro__block h3    { color: #FF6B00; }
+html.theme-halloween .offer-card__badge  { background: #FF6B00; }
+
+
+/* ====================================================
+   BANNIÈRE SAISONNIÈRE
+   Affichée en haut du hero slide quand un thème
+   saisonnier est actif (cachée par défaut)
+==================================================== */
+
+.seasonal-banner {
+  display         : none; /* caché par défaut */
+  align-items     : center;
+  justify-content : center;
+  gap             : 0.6rem;
+  padding         : 0.5rem 1.5rem;
+  border          : 1px solid var(--gold);
+  border-radius   : 50px;
+  background      : rgba(255,255,255,.04);
+  margin-bottom   : 1rem;
+  font-family     : var(--body);
+  font-size       : 0.85rem;
+  color           : rgba(255,255,255,.7);
+  white-space     : nowrap;
+}
+
+/* Visible dès qu'un thème saisonnier est actif */
+html.theme-noel .seasonal-banner,
+html.theme-galette .seasonal-banner,
+html.theme-ete .seasonal-banner,
+html.theme-halloween .seasonal-banner {
+  display : flex;
+}
+
+.seasonal-banner__emoji { font-size: 1.1rem; }
+.seasonal-banner__text  { font-style: italic; }
+
+/* Animations spéciales */
+@keyframes snowFall {
+  0%,100% { transform: translateY(0) rotate(0deg);   }
+  33%      { transform: translateY(-4px) rotate(20deg);  }
+  66%      { transform: translateY(2px) rotate(-10deg); }
+}
+
+
+/* ====================================================
+   THÈME RAMADAN
+   Dates approximatives (calendrier lunaire) :
+     2025 : 1 Mar → 30 Mar
+     2026 : 19 Fév → 20 Mar
+   Ambiance : nuit dorée, crescent, violet profond
+==================================================== */
+
+html.theme-ramadan {
+  --gold      : #D4A843;
+  --green     : #8B5CF6;
+  --black     : #06050F;
+  --dark      : #0C0A1E;
+  --grey      : #13102A;
+  --mobile-bg : #06050F; /* sync avec --black */
+}
+
+/* Accent violet sur les labels */
+html.theme-ramadan .section-label { color: #8B5CF6; }
+html.theme-ramadan .section-title::after { background: var(--gold); }
+
+/* Filets colorés */
+html.theme-ramadan .hero-desktop__slide-panel::after {
+  background: linear-gradient(90deg, transparent, #8B5CF6, var(--gold), transparent);
+}
+
+/* Titre hero */
+html.theme-ramadan .hero-slide-content__title span,
+html.theme-ramadan .hero-mobile__title span { color: var(--gold); }
+
+html.theme-ramadan .hero-slide-content__title::after,
+html.theme-ramadan .hero-mobile__title::after {
+  background: linear-gradient(90deg, var(--gold), #8B5CF6);
+}
+
+/* Badge Halal — violet + or */
+html.theme-ramadan .halal-stamp__main,
+html.theme-ramadan .halal-stamp-mobile .halal-stamp__main {
+  border-color : var(--gold);
+  color        : var(--gold);
+  box-shadow   : 4px 4px 0 rgba(212,168,67,.4);
+}
+
+html.theme-ramadan .halal-stamp__sub,
+html.theme-ramadan .halal-stamp-mobile .halal-stamp__sub {
+  background   : #8B5CF6;
+  color        : #fff;
+  border-color : var(--gold);
+  box-shadow   : 4px 4px 0 rgba(212,168,67,.4);
+}
+
+/* Onglets actifs */
+html.theme-ramadan .menu-tab.active   { background: #8B5CF6; border-color: #8B5CF6; color: #fff; }
+html.theme-ramadan .menu-tab:hover    { border-color: var(--gold); }
+
+/* Offres */
+html.theme-ramadan .offers::before {
+  background: linear-gradient(90deg, transparent, #8B5CF6, var(--gold), transparent);
+}
+
+/* Boutons */
+html.theme-ramadan .btn--primary { background: var(--gold); color: #06050F; }
+html.theme-ramadan .btn--primary:hover { box-shadow: 0 0 30px rgba(212,168,67,.55); }
+
+/* Badge Limité */
+html.theme-ramadan .offer-card__badge { background: var(--gold); color: #06050F; }
+
+/* Intro */
+html.theme-ramadan .intro { border-top-color: var(--gold); }
+html.theme-ramadan .intro__block::before { background: linear-gradient(90deg, var(--gold), #8B5CF6); }
+html.theme-ramadan .intro__block h3 { color: var(--gold); }
+
+/* Contact / Socials */
+html.theme-ramadan .social-btn        { border-color: var(--gold); color: var(--gold); }
+html.theme-ramadan .social-btn:hover  { background: var(--gold); color: #06050F; }
+
+/* Avis */
+html.theme-ramadan .reviews__cta-small       { border-color: var(--gold); color: var(--gold); }
+html.theme-ramadan .reviews__cta-small:hover { background: var(--gold); color: #06050F; }
+
+/* Nav */
+html.theme-ramadan .nav-link::after      { background: var(--gold); }
+html.theme-ramadan .nav-link:hover,
+html.theme-ramadan .nav-link.active      { color: var(--gold); }
+
+/* Bannière saisonnière */
+html.theme-ramadan .seasonal-banner {
+  background  : linear-gradient(135deg, #06050F 0%, #13102A 50%, #06050F 100%);
+  border-color: var(--gold);
+}

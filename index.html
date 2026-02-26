@@ -35,6 +35,8 @@
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/animations.css" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/css/themes.css" />
+  <link rel="stylesheet" href="assets/css/backgrounds.css" />
 </head>
 
 <body>
@@ -111,6 +113,12 @@
 
           <div class="hero-slide-content">
 
+            <!-- Bannière saisonnière — cachée par défaut, activée par themes.js -->
+            <div class="seasonal-banner">
+              <span class="seasonal-banner__emoji"></span>
+              <span class="seasonal-banner__text"></span>
+            </div>
+
             <p class="hero-slide-content__eyebrow">Fast-food à votre service</p>
 
             <h1 class="hero-slide-content__title">
@@ -161,6 +169,12 @@
 
       <!-- Texte + badge en bas -->
       <div class="hero-mobile__slide">
+
+        <!-- Bannière saisonnière mobile -->
+        <div class="seasonal-banner">
+          <span class="seasonal-banner__emoji"></span>
+          <span class="seasonal-banner__text"></span>
+        </div>
 
         <p class="hero-mobile__eyebrow">Fast-food à votre service</p>
 
@@ -329,9 +343,7 @@
 
   <!-- ================================================
        AVIS GOOGLE
-       Note : avis intégrés manuellement.
-       Pour des avis en temps réel → Google Places API
-       ou widget Elfsight (~5€/mois)
+       Layout compact : score fixe à gauche, cards à droite
   ================================================ -->
   <section class="reviews" id="avis" aria-label="Avis clients">
 
@@ -340,72 +352,76 @@
       <h2 class="section-title">Avis <span class="text-gold">Google</span></h2>
     </div>
 
-    <div class="reviews__summary reveal">
-      <div class="reviews__score">4.2</div>
-      <div>
+    <div class="reviews__inner">
+
+      <!-- Score + lien sticky -->
+      <div class="reviews__summary reveal">
+        <div class="reviews__score">4.2</div>
         <div class="reviews__stars">★★★★☆</div>
-        <div class="reviews__count">Basé sur les avis Google</div>
+        <div class="reviews__count">Basé sur les avis Google Maps</div>
+        <a
+          href="https://www.google.com/maps/place/Dameyo/@48.8442,2.5973,17z"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="reviews__cta-small"
+        >
+          Voir tous →
+        </a>
       </div>
-    </div>
 
-    <div class="reviews__grid">
+      <!-- Grille de 3 avis -->
+      <div class="reviews__grid">
 
-      <div class="review-card reveal">
-        <div class="review-card__header">
-          <div class="review-card__avatar">M</div>
-          <div>
-            <div class="review-card__name">Maxime D.</div>
-            <div class="review-card__date">Il y a 2 semaines</div>
+        <div class="review-card reveal">
+          <div class="review-card__header">
+            <div class="review-card__avatar">M</div>
+            <div>
+              <div class="review-card__name">Maxime D.</div>
+              <div class="review-card__date">Il y a 2 semaines</div>
+            </div>
           </div>
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">
+            « Les burgers sont excellents, copieux et bien garnis.
+            Service rapide et sympa. Je recommande le Big DMY ! »
+          </p>
         </div>
-        <div class="review-card__stars">★★★★★</div>
-        <p class="review-card__text">
-          « Les burgers sont vraiment excellents, copieux et bien garnis.
-          Le service est rapide et sympa. Je recommande le Big DMY ! »
-        </p>
-      </div>
 
-      <div class="review-card reveal delay-1">
-        <div class="review-card__header">
-          <div class="review-card__avatar">S</div>
-          <div>
-            <div class="review-card__name">Sarah L.</div>
-            <div class="review-card__date">Il y a 1 mois</div>
+        <div class="review-card reveal delay-1">
+          <div class="review-card__header">
+            <div class="review-card__avatar">S</div>
+            <div>
+              <div class="review-card__name">Sarah L.</div>
+              <div class="review-card__date">Il y a 1 mois</div>
+            </div>
           </div>
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">
+            « Super restaurant ! Wings et nuggets délicieux.
+            Prix raisonnables et portions généreuses. »
+          </p>
         </div>
-        <div class="review-card__stars">★★★★★</div>
-        <p class="review-card__text">
-          « Super restaurant ! Les wings et les nuggets sont délicieux.
-          Les prix sont raisonnables et les portions généreuses. »
-        </p>
-      </div>
 
-      <div class="review-card reveal delay-1">
-        <div class="review-card__header">
-          <div class="review-card__avatar">K</div>
-          <div>
-            <div class="review-card__name">Kevin R.</div>
-            <div class="review-card__date">Il y a 3 semaines</div>
+        <div class="review-card reveal delay-1">
+          <div class="review-card__header">
+            <div class="review-card__avatar">K</div>
+            <div>
+              <div class="review-card__name">Kevin R.</div>
+              <div class="review-card__date">Il y a 3 semaines</div>
+            </div>
           </div>
+          <div class="review-card__stars">★★★★☆</div>
+          <p class="review-card__text">
+            « Bon rapport qualité/prix, sandwichs généreux,
+            pain frais. Salle propre et personnel accueillant. »
+          </p>
         </div>
-        <div class="review-card__stars">★★★★☆</div>
-        <p class="review-card__text">
-          « Bon rapport qualité/prix, les sandwichs sont généreux
-          et le pain est frais. La salle est propre et le personnel accueillant. »
-        </p>
+
       </div>
+      <!-- /reviews__grid -->
 
     </div>
-
-    <div class="reviews__cta reveal">
-      <a
-        href="https://www.google.com/maps/place/Dameyo/@48.8442,2.5973,17z"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Voir tous les avis sur Google →
-      </a>
-    </div>
+    <!-- /reviews__inner -->
 
   </section>
   <!-- /reviews -->
@@ -497,6 +513,12 @@
         &copy; <span id="year"></span> Dameyo. Tous droits réservés.
       </p>
 
+      <!-- Badge thème saisonnier (visible uniquement quand thème actif) -->
+      <div class="footer__theme-badge">
+        <span class="seasonal-banner__emoji"></span>
+        <span>Édition spéciale</span>
+      </div>
+
       <nav class="footer__nav" aria-label="Navigation pied de page">
         <a href="#accueil">Accueil</a>
         <a href="#menu">Menu</a>
@@ -511,6 +533,7 @@
 
 
   <!-- Scripts JS — chargés en fin de body -->
+  <script src="assets/js/themes.js"></script>
   <script src="assets/js/navbar.js"></script>
   <script src="assets/js/animations.js"></script>
   <script src="assets/js/main.js"></script>
