@@ -1,0 +1,160 @@
+/* ====================================================
+   DAMEYO — responsive.css
+   Media queries — approche mobile-first
+
+   Breakpoints :
+     Tablette  : max-width 1024px
+     Mobile    : max-width 768px  ← bascule hero desktop/mobile
+     Petit mob.: max-width 480px
+     Grand éc. : min-width 1400px
+==================================================== */
+
+
+/* ====================================================
+   TABLETTE — max-width : 1024px
+==================================================== */
+
+@media (max-width: 1024px) {
+
+  /* Menu : une seule colonne */
+  .menu-cards {
+    grid-template-columns : 1fr;
+  }
+
+  /* Offres : une seule colonne centrée */
+  .offers__grid {
+    grid-template-columns : 1fr;
+    max-width             : 580px;
+    margin                : 0 auto;
+  }
+
+  /* Contact : une seule colonne */
+  .contact__grid {
+    grid-template-columns : 1fr;
+    gap                   : 3rem;
+  }
+
+  /* Avis : deux colonnes */
+  .reviews__grid {
+    grid-template-columns : 1fr 1fr;
+  }
+
+}
+
+
+/* ====================================================
+   MOBILE — max-width : 768px
+   Bascule hero desktop ↔ hero mobile
+==================================================== */
+
+@media (max-width: 768px) {
+
+  /* ── Bascule hero ── */
+  .hero-desktop { display: none !important; }
+  .hero-mobile  { display: flex !important; }
+
+  /* ── Navbar burger ── */
+  .navbar__links {
+    position        : fixed;
+    top             : 0;
+    right           : 0;
+    height          : 100vh;
+    width           : 70vw;
+    max-width       : 300px;
+    background      : var(--black);
+    border-left     : 2px solid rgba(245, 166, 35, 0.3);
+    flex-direction  : column;
+    justify-content : center;
+    align-items     : center;
+    gap             : 3rem;
+    transform       : translateX(100%);
+    transition      : transform 0.4s ease;
+    z-index         : 999;
+  }
+
+  .navbar__links.open { transform: translateX(0); }
+  .navbar__burger     { display: flex; }
+  .nav-link           { font-size: 1.8rem; }
+
+  /* ── Intro : colonne unique ── */
+  .intro__grid { grid-template-columns: 1fr; }
+
+  /* ── Offres : ratio fixe, image contenue ── */
+  .offers__grid {
+    grid-template-columns : 1fr;
+    gap                   : 1.5rem;
+    max-width             : 480px;
+    margin                : 0 auto;
+  }
+
+  .offer-card {
+    aspect-ratio    : 16 / 9;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+  }
+
+  .offer-card img {
+    max-height  : 100%;
+    width       : auto;
+    max-width   : 100%;
+    object-fit  : contain;
+  }
+
+  /* ── Avis : colonne unique ── */
+  .reviews__grid { grid-template-columns: 1fr; }
+
+  /* ── Footer centré ── */
+  .footer__inner {
+    flex-direction : column;
+    text-align     : center;
+  }
+
+  .footer__nav {
+    flex-wrap       : wrap;
+    justify-content : center;
+    gap             : 1rem;
+  }
+
+}
+
+
+/* ====================================================
+   TRÈS PETIT MOBILE — max-width : 480px
+==================================================== */
+
+@media (max-width: 480px) {
+
+  .section-title { font-size: 2.2rem; }
+
+  .menu-tab {
+    font-size : 0.85rem;
+    padding   : 0.5rem 1.2rem;
+  }
+
+  /* Badge Halal encore plus compact */
+  .halal-stamp-mobile .halal-stamp__main {
+    font-size      : 1.2rem;
+    letter-spacing : 0.08em;
+  }
+
+  .halal-stamp-mobile .halal-stamp__sub {
+    font-size      : 0.6rem;
+    letter-spacing : 0.04em;
+  }
+
+}
+
+
+/* ====================================================
+   GRAND ÉCRAN — min-width : 1400px
+==================================================== */
+
+@media (min-width: 1400px) {
+
+  .menu-cards   { gap: 3rem; }
+  .offers__grid { gap: 4rem; }
+
+  .contact__map { height: 500px; }
+
+}

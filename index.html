@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <!-- ================================================
+       DAMEYO — Site Vitrine
+       Charte graphique :
+         Noir    : #111111  |  Sombre : #1a1a1a
+         Or      : #F5A623  |  Vert   : #8DC63F
+         Blanc   : #FFFFFF
+
+       Structure CSS :
+         style.css       → Composants principaux
+         animations.css  → Keyframes & transitions
+         responsive.css  → Media queries mobile-first
+
+       Structure JS :
+         navbar.js       → Scroll, burger, lien actif
+         animations.js   → Scroll reveal & hero slide
+         main.js         → Onglets menu, smooth scroll
+  ================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dameyo – Fast-Food</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Feuilles de style (ordre important) -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+</head>
+
+<body>
+
+  <!-- ================================================
+       NAVBAR — Fixe, devient opaque au scroll
+       Gérée par : assets/js/navbar.js
+  ================================================ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navigation principale">
+
+    <a href="#accueil" class="navbar__logo" aria-label="Retour à l'accueil">
+      <img src="assets/images/logo/logo_transparent.png" alt="Logo Dameyo" />
+    </a>
+
+    <ul class="navbar__links" id="navLinks">
+      <li><a href="#accueil" class="nav-link">Accueil</a></li>
+      <li><a href="#menu"    class="nav-link">Menu</a></li>
+      <li><a href="#offres"  class="nav-link">Offres</a></li>
+      <li><a href="#avis"    class="nav-link">Avis</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+
+    <button
+      class="navbar__burger"
+      id="burgerBtn"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </nav>
+  <!-- /navbar -->
+
+
+  <!-- ================================================
+       HERO — Comportement différent desktop / mobile
+       Voir détails dans style.css section "HERO"
+
+       DESKTOP (> 768px) :
+         1. Vidéo plein écran (1 tour = 10s)
+         2. Slide automatique vers "Le Goût Qui Claque"
+         Géré par : assets/js/main.js (heroSlideDesktop)
+
+       MOBILE (≤ 768px) :
+         Vidéo 40vh en haut + texte en bas, visible
+         d'emblée, pas de transition
+  ================================================ -->
+  <div id="accueil">
+
+    <!-- ── DESKTOP : track coulissant ── -->
+    <div class="hero-desktop" id="heroDesktop" aria-label="Accueil">
+
+      <!-- Le track se déplace de 0 → -50% après la vidéo -->
+      <div class="hero-desktop__track" id="heroTrack">
+
+        <!-- Panneau 1 : vidéo plein écran -->
+        <div class="hero-desktop__video-panel">
+          <video id="heroVideo" autoplay muted playsinline aria-hidden="true">
+            <source src="assets/images/hero/hero.mp4" type="video/mp4" />
+            <img src="assets/images/hero/hero.jpg" alt="Ambiance Dameyo" />
+          </video>
+          <div class="vignette" aria-hidden="true"></div>
+          <div class="scroll-hint" aria-hidden="true"><span></span></div>
+        </div>
+
+        <!-- Panneau 2 : slide "Le Goût Qui Claque" -->
+        <!-- .slide-in est ajouté par JS après la vidéo -->
+        <div class="hero-desktop__slide-panel" id="heroSlidePanel">
+
+          <div class="hero-desktop__slide-bg" aria-hidden="true"></div>
+
+          <div class="hero-slide-content">
+
+            <p class="hero-slide-content__eyebrow">Fast-food à votre service</p>
+
+            <h1 class="hero-slide-content__title">
+              Le Goût<br />
+              <span class="text-gold">Qui Claque.</span>
+            </h1>
+
+            <p class="hero-slide-content__subtitle">
+              Burgers, sandwichs, finger foods &amp; desserts —<br />
+              faits pour vous régaler.
+            </p>
+
+            <!-- Badge Halal — tampon incliné style Dameyo -->
+            <div class="halal-wrapper">
+              <div class="halal-stamp">
+                <div class="halal-stamp__main">
+                  <span class="halal-stamp__icon">☪️</span> 100% HALAL
+                </div>
+                <div class="halal-stamp__sub">oui oui, même les donuts 🍩</div>
+              </div>
+            </div>
+
+            <div class="hero-slide-content__cta">
+              <a href="#menu" class="btn btn--primary">Voir le Menu</a>
+            </div>
+
+          </div>
+        </div>
+        <!-- /slide-panel -->
+
+      </div>
+      <!-- /track -->
+
+    </div>
+    <!-- /hero-desktop -->
+
+
+    <!-- ── MOBILE : vidéo + texte empilés ── -->
+    <div class="hero-mobile" id="heroMobile" aria-label="Accueil">
+
+      <!-- Vidéo en haut (40vh) -->
+      <div class="hero-mobile__video">
+        <video autoplay muted loop playsinline aria-hidden="true">
+          <source src="assets/images/hero/hero.mp4" type="video/mp4" />
+          <img src="assets/images/hero/hero.jpg" alt="Ambiance Dameyo" />
+        </video>
+      </div>
+
+      <!-- Texte + badge en bas -->
+      <div class="hero-mobile__slide">
+
+        <p class="hero-mobile__eyebrow">Fast-food à votre service</p>
+
+        <h1 class="hero-mobile__title">
+          Le Goût<br />
+          <span class="text-gold">Qui Claque.</span>
+        </h1>
+
+        <p class="hero-mobile__subtitle">
+          Burgers, sandwichs, finger foods &amp; desserts —<br />
+          faits pour vous régaler.
+        </p>
+
+        <!-- Badge Halal mobile -->
+        <div class="halal-stamp-mobile">
+          <div class="halal-stamp__main">
+            <span class="halal-stamp__icon">☪️</span> 100% HALAL
+          </div>
+          <div class="halal-stamp__sub">oui oui, même les donuts 🍩</div>
+        </div>
+
+        <a href="#menu" class="btn btn--primary">Voir le Menu</a>
+
+      </div>
+
+    </div>
+    <!-- /hero-mobile -->
+
+  </div>
+  <!-- /#accueil -->
+
+
+  <!-- ================================================
+       INTRO — 3 blocs d'accroche
+  ================================================ -->
+  <section class="intro" aria-label="Notre offre en bref">
+    <div class="intro__grid">
+
+      <div class="intro__block reveal reveal--left">
+        <span class="intro__icon" aria-hidden="true">🍔</span>
+        <h3>Burgers &amp; Sandwichs</h3>
+        <p>Des recettes généreuses, des ingrédients frais, une cuisson à la commande.</p>
+      </div>
+
+      <div class="intro__block reveal">
+        <span class="intro__icon" aria-hidden="true">🍟</span>
+        <h3>Finger Foods</h3>
+        <p>Wings, nuggets, crevettes... pour grignoter seul ou partager entre amis.</p>
+      </div>
+
+      <div class="intro__block reveal reveal--right">
+        <span class="intro__icon" aria-hidden="true">🍩</span>
+        <h3>Desserts</h3>
+        <p>Donuts, churros, tiramisu... la touche sucrée qui termine en beauté.</p>
+      </div>
+
+    </div>
+  </section>
+  <!-- /intro -->
+
+
+  <!-- ================================================
+       MENU — 5 onglets avec cartes
+       Logique onglets : assets/js/main.js
+  ================================================ -->
+  <section class="menu-section" id="menu" aria-label="Notre menu">
+
+    <div class="section-header reveal">
+      <p class="section-label">Ce qu'on propose</p>
+      <h2 class="section-title">Notre <span class="text-gold">Menu</span></h2>
+    </div>
+
+    <div class="menu-tabs" role="tablist" aria-label="Catégories du menu">
+      <button class="menu-tab active" data-tab="burgers"   role="tab" aria-selected="true"  aria-controls="tab-burgers">Burgers</button>
+      <button class="menu-tab"        data-tab="sandwichs" role="tab" aria-selected="false" aria-controls="tab-sandwichs">Sandwichs</button>
+      <button class="menu-tab"        data-tab="salades"   role="tab" aria-selected="false" aria-controls="tab-salades">Salades</button>
+      <button class="menu-tab"        data-tab="fingers"   role="tab" aria-selected="false" aria-controls="tab-fingers">Finger Foods</button>
+      <button class="menu-tab"        data-tab="desserts"  role="tab" aria-selected="false" aria-controls="tab-desserts">Desserts</button>
+    </div>
+
+    <div class="menu-panels">
+
+      <div class="menu-panel active" id="tab-burgers" role="tabpanel">
+        <div class="menu-cards">
+          <div class="menu-card reveal">
+            <img src="assets/images/menu/burgers1.png" alt="Carte Burgers — page 1" loading="lazy" />
+          </div>
+          <div class="menu-card reveal delay-1">
+            <img src="assets/images/menu/burgers2.png" alt="Carte Burgers — page 2" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="tab-sandwichs" role="tabpanel">
+        <div class="menu-cards menu-cards--single">
+          <div class="menu-card reveal">
+            <img src="assets/images/menu/sandwichs.png" alt="Carte Sandwichs" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="tab-salades" role="tabpanel">
+        <div class="menu-cards menu-cards--single">
+          <div class="menu-card reveal">
+            <img src="assets/images/menu/salades.png" alt="Carte Salades et Menu Enfant" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="tab-fingers" role="tabpanel">
+        <div class="menu-cards menu-cards--single">
+          <div class="menu-card reveal">
+            <img src="assets/images/menu/fingers.jpg" alt="Carte Finger Foods" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="tab-desserts" role="tabpanel">
+        <div class="menu-cards menu-cards--single">
+          <div class="menu-card reveal">
+            <img src="assets/images/menu/desserts.jpg" alt="Carte Desserts" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /menu-panels -->
+
+  </section>
+  <!-- /menu-section -->
+
+
+  <!-- ================================================
+       OFFRES DU MOMENT
+  ================================================ -->
+  <section class="offers" id="offres" aria-label="Offres du moment">
+
+    <div class="section-header reveal">
+      <p class="section-label">Profitez-en maintenant</p>
+      <h2 class="section-title">Offres du <span class="text-gold">Moment</span></h2>
+    </div>
+
+    <div class="offers__grid">
+
+      <div class="offer-card reveal reveal--left">
+        <img src="assets/images/offers/offre2.png" alt="Offre Burgers" loading="lazy" />
+        <span class="offer-card__badge">Limité</span>
+      </div>
+
+      <div class="offer-card reveal reveal--right">
+        <img src="assets/images/offers/offre1.png" alt="Offre Finger Foods" loading="lazy" />
+        <span class="offer-card__badge">Limité</span>
+      </div>
+
+    </div>
+
+  </section>
+  <!-- /offers -->
+
+
+  <!-- ================================================
+       AVIS GOOGLE
+       Note : avis intégrés manuellement.
+       Pour des avis en temps réel → Google Places API
+       ou widget Elfsight (~5€/mois)
+  ================================================ -->
+  <section class="reviews" id="avis" aria-label="Avis clients">
+
+    <div class="section-header reveal">
+      <p class="section-label">Ce que disent nos clients</p>
+      <h2 class="section-title">Avis <span class="text-gold">Google</span></h2>
+    </div>
+
+    <div class="reviews__summary reveal">
+      <div class="reviews__score">4.2</div>
+      <div>
+        <div class="reviews__stars">★★★★☆</div>
+        <div class="reviews__count">Basé sur les avis Google</div>
+      </div>
+    </div>
+
+    <div class="reviews__grid">
+
+      <div class="review-card reveal">
+        <div class="review-card__header">
+          <div class="review-card__avatar">M</div>
+          <div>
+            <div class="review-card__name">Maxime D.</div>
+            <div class="review-card__date">Il y a 2 semaines</div>
+          </div>
+        </div>
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">
+          « Les burgers sont vraiment excellents, copieux et bien garnis.
+          Le service est rapide et sympa. Je recommande le Big DMY ! »
+        </p>
+      </div>
+
+      <div class="review-card reveal delay-1">
+        <div class="review-card__header">
+          <div class="review-card__avatar">S</div>
+          <div>
+            <div class="review-card__name">Sarah L.</div>
+            <div class="review-card__date">Il y a 1 mois</div>
+          </div>
+        </div>
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">
+          « Super restaurant ! Les wings et les nuggets sont délicieux.
+          Les prix sont raisonnables et les portions généreuses. »
+        </p>
+      </div>
+
+      <div class="review-card reveal delay-1">
+        <div class="review-card__header">
+          <div class="review-card__avatar">K</div>
+          <div>
+            <div class="review-card__name">Kevin R.</div>
+            <div class="review-card__date">Il y a 3 semaines</div>
+          </div>
+        </div>
+        <div class="review-card__stars">★★★★☆</div>
+        <p class="review-card__text">
+          « Bon rapport qualité/prix, les sandwichs sont généreux
+          et le pain est frais. La salle est propre et le personnel accueillant. »
+        </p>
+      </div>
+
+    </div>
+
+    <div class="reviews__cta reveal">
+      <a
+        href="https://www.google.com/maps/place/Dameyo/@48.8442,2.5973,17z"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Voir tous les avis sur Google →
+      </a>
+    </div>
+
+  </section>
+  <!-- /reviews -->
+
+
+  <!-- ================================================
+       CONTACT + GOOGLE MAPS
+       Pour mettre à jour la carte :
+         1. maps.google.com → cherchez l'adresse
+         2. Partager → Intégrer une carte
+         3. Remplacez le src de l'iframe ci-dessous
+  ================================================ -->
+  <section class="contact" id="contact" aria-label="Contact">
+
+    <div class="section-header reveal">
+      <p class="section-label">On vous attend</p>
+      <h2 class="section-title">Nous <span class="text-gold">Trouver</span></h2>
+    </div>
+
+    <div class="contact__grid">
+
+      <div class="contact__info reveal reveal--left">
+
+        <div class="contact__item">
+          <span class="contact__icon" aria-hidden="true">📍</span>
+          <div>
+            <strong>Adresse</strong>
+            <p>34 Bd de Nesles<br />77420 Champs-sur-Marne</p>
+          </div>
+        </div>
+
+        <div class="contact__item">
+          <span class="contact__icon" aria-hidden="true">🕐</span>
+          <div>
+            <strong>Horaires</strong>
+            <p>
+              Lundi – Vendredi : 11h – 22h<br />
+              Samedi – Dimanche : 11h – 23h
+            </p>
+          </div>
+        </div>
+
+        <div class="contact__item">
+          <span class="contact__icon" aria-hidden="true">📞</span>
+          <div>
+            <strong>Téléphone</strong>
+            <p><a href="tel:+33160171367">01 60 17 13 67</a></p>
+          </div>
+        </div>
+
+        <div class="contact__socials">
+          <a href="#" class="social-btn" aria-label="Instagram Dameyo">Instagram</a>
+          <a href="#" class="social-btn" aria-label="Facebook Dameyo">Facebook</a>
+        </div>
+
+      </div>
+      <!-- /contact__info -->
+
+      <div class="contact__map reveal reveal--right">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2631.5!2d2.5973!3d48.8442!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e5fb1da7b43dcb%3A0x5f7d8d6e42a8b4c0!2s34+Bd+de+Nesles%2C+77420+Champs-sur-Marne!5e0!3m2!1sfr!2sfr!4v1700000000001"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Dameyo — 34 Bd de Nesles, 77420 Champs-sur-Marne"
+        ></iframe>
+      </div>
+
+    </div>
+    <!-- /contact__grid -->
+
+  </section>
+  <!-- /contact -->
+
+
+  <!-- ================================================
+       FOOTER
+  ================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+
+      <img
+        src="assets/images/logo/logo_transparent.png"
+        alt="Dameyo"
+        class="footer__logo"
+      />
+
+      <p class="footer__copy">
+        &copy; <span id="year"></span> Dameyo. Tous droits réservés.
+      </p>
+
+      <nav class="footer__nav" aria-label="Navigation pied de page">
+        <a href="#accueil">Accueil</a>
+        <a href="#menu">Menu</a>
+        <a href="#offres">Offres</a>
+        <a href="#avis">Avis</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+    </div>
+  </footer>
+  <!-- /footer -->
+
+
+  <!-- Scripts JS — chargés en fin de body -->
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,942 @@
+/* ====================================================
+   DAMEYO — style.css
+   Styles principaux du site vitrine
+
+   Sommaire :
+     1.  Variables CSS & Reset
+     2.  Utilitaires (boutons, titres de section)
+     3.  Navbar
+     4.  Hero Desktop (track coulissant vidéo → slide)
+     5.  Hero Mobile (vidéo + texte empilés)
+     6.  Badge Halal (tampon incliné)
+     7.  Intro (3 blocs)
+     8.  Menu (onglets + cartes)
+     9.  Offres du moment
+     10. Avis Google
+     11. Contact + Google Maps
+     12. Footer
+==================================================== */
+
+
+/* ====================================================
+   1. VARIABLES CSS & RESET
+==================================================== */
+
+:root {
+  --black      : #111111;
+  --dark       : #1a1a1a;
+  --grey       : #222222;
+  --gold       : #F5A623;
+  --green      : #8DC63F;
+  --white      : #FFFFFF;
+
+  --display    : 'Bebas Neue', sans-serif;
+  --body       : 'Barlow', sans-serif;
+
+  --shadow     : 0 8px 32px rgba(0, 0, 0, 0.6);
+  --glow       : 0 0 30px rgba(245, 166, 35, 0.35);
+  --radius     : 12px;
+  --t          : 0.4s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing : border-box;
+  margin     : 0;
+  padding    : 0;
+}
+
+html {
+  scroll-behavior : smooth;
+}
+
+body {
+  font-family : var(--body);
+  background  : var(--black);
+  color       : var(--white);
+  overflow-x  : hidden;
+  line-height : 1.6;
+}
+
+img {
+  max-width : 100%;
+  display   : block;
+}
+
+a {
+  text-decoration : none;
+  color           : inherit;
+}
+
+ul {
+  list-style : none;
+}
+
+
+/* ====================================================
+   2. UTILITAIRES
+==================================================== */
+
+.text-gold { color: var(--gold); }
+
+/* Boutons */
+.btn {
+  display        : inline-block;
+  font-family    : var(--display);
+  font-size      : 1.1rem;
+  letter-spacing : 0.1em;
+  padding        : 0.9rem 2.5rem;
+  border-radius  : 6px;
+  border         : none;
+  cursor         : pointer;
+  transition     : transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn--primary             { background: var(--gold); color: var(--black); }
+.btn--primary:hover       { transform: translateY(-3px) scale(1.03); box-shadow: var(--glow); }
+
+/* En-têtes de section */
+.section-header { text-align: center; margin-bottom: 3.5rem; }
+
+.section-label {
+  font-size      : 0.8rem;
+  font-weight    : 600;
+  letter-spacing : 0.22em;
+  text-transform : uppercase;
+  color          : var(--green);
+  margin-bottom  : 0.5rem;
+}
+
+.section-title {
+  font-family : var(--display);
+  font-size   : clamp(2.5rem, 6vw, 5rem);
+  line-height : 1;
+}
+
+.section-title::after {
+  content       : '';
+  display       : block;
+  height        : 3px;
+  width         : 60px;
+  background    : var(--gold);
+  margin        : 0.6rem auto 0;
+  border-radius : 2px;
+  transition    : width 0.5s ease;
+}
+
+.section-header:hover .section-title::after { width: 120px; }
+
+/* Indicateur de scroll */
+.scroll-hint {
+  position        : absolute;
+  bottom          : 2rem;
+  left            : 50%;
+  transform       : translateX(-50%);
+  z-index         : 10;
+  pointer-events  : none;
+}
+
+.scroll-hint span {
+  display    : block;
+  width      : 2px;
+  height     : 50px;
+  background : linear-gradient(to bottom, var(--gold), transparent);
+  animation  : scrollPulse 1.8s ease-in-out infinite;
+}
+
+
+/* ====================================================
+   3. NAVBAR
+==================================================== */
+
+.navbar {
+  position        : fixed;
+  top             : 0;
+  left            : 0;
+  width           : 100%;
+  z-index         : 1000;
+  padding         : 1.2rem 2rem;
+  display         : flex;
+  align-items     : center;
+  justify-content : space-between;
+  transition      : background var(--t), padding var(--t);
+}
+
+.navbar.scrolled {
+  background      : rgba(17, 17, 17, 0.96);
+  backdrop-filter : blur(12px);
+  padding         : 0.7rem 2rem;
+  border-bottom   : 1px solid rgba(245, 166, 35, 0.2);
+}
+
+.navbar__logo img {
+  height     : 44px;
+  filter     : brightness(0) invert(1);
+  transition : filter 0.3s ease, transform 0.3s ease;
+}
+
+.navbar.scrolled .navbar__logo img {
+  filter : brightness(0) saturate(100%) invert(68%) sepia(56%) saturate(600%) hue-rotate(5deg);
+}
+
+.navbar__logo:hover img { transform: scale(1.05); }
+
+.navbar__links {
+  display     : flex;
+  gap         : 2rem;
+  align-items : center;
+}
+
+.nav-link {
+  font-family    : var(--display);
+  font-size      : 1rem;
+  letter-spacing : 0.1em;
+  position       : relative;
+  padding-bottom : 4px;
+  transition     : color 0.25s ease;
+}
+
+.nav-link::after {
+  content    : '';
+  position   : absolute;
+  bottom     : 0;
+  left       : 0;
+  width      : 0;
+  height     : 2px;
+  background : var(--gold);
+  transition : width 0.35s ease;
+}
+
+.nav-link:hover,
+.nav-link.active             { color: var(--gold); }
+.nav-link:hover::after,
+.nav-link.active::after      { width: 100%; }
+
+.navbar__burger {
+  display        : none;
+  flex-direction : column;
+  gap            : 5px;
+  background     : none;
+  border         : none;
+  cursor         : pointer;
+  padding        : 4px;
+  z-index        : 1001;
+}
+
+.navbar__burger span {
+  display    : block;
+  width      : 26px;
+  height     : 2px;
+  background : var(--white);
+  transition : transform 0.3s ease, opacity 0.3s ease;
+}
+
+.navbar__burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.navbar__burger.open span:nth-child(2) { opacity: 0; }
+.navbar__burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+/* ====================================================
+   4. HERO DESKTOP
+   Track de 200% de large contenant 2 panneaux :
+     - Panneau 1 : vidéo plein écran
+     - Panneau 2 : slide "Le Goût Qui Claque"
+   JS translate le track de 0 → -50% après 1 tour vidéo
+==================================================== */
+
+.hero-desktop {
+  display    : block;
+  position   : relative;
+  height     : 100vh;
+  min-height : 600px;
+  overflow   : hidden;
+  background : var(--black);
+}
+
+/* Track coulissant */
+.hero-desktop__track {
+  display    : flex;
+  width      : 200%;
+  height     : 100%;
+  transition : transform 1.1s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+/* Panneau vidéo */
+.hero-desktop__video-panel {
+  position   : relative;
+  width      : 50%;
+  height     : 100%;
+  flex-shrink: 0;
+}
+
+.hero-desktop__video-panel video {
+  position   : absolute;
+  inset      : 0;
+  width      : 100%;
+  height     : 100%;
+  object-fit : cover;
+  object-position : center center;
+}
+
+.hero-desktop__video-panel .vignette {
+  position       : absolute;
+  inset          : 0;
+  background     : radial-gradient(ellipse at center, transparent 40%, rgba(17, 17, 17, 0.5) 100%);
+  pointer-events : none;
+}
+
+/* Panneau slide texte */
+.hero-desktop__slide-panel {
+  position        : relative;
+  width           : 50%;
+  height          : 100%;
+  flex-shrink     : 0;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  background      : var(--black);
+  overflow        : hidden;
+}
+
+.hero-desktop__slide-bg {
+  position       : absolute;
+  inset          : 0;
+  background     :
+    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(245, 166, 35, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 10% 80%, rgba(141, 198, 63, 0.04) 0%, transparent 50%);
+  pointer-events : none;
+}
+
+.hero-desktop__slide-panel::after {
+  content    : '';
+  position   : absolute;
+  top        : 0;
+  left       : 0;
+  right      : 0;
+  height     : 3px;
+  background : linear-gradient(90deg, transparent, var(--gold), transparent);
+  z-index    : 1;
+}
+
+/* Contenu texte */
+.hero-slide-content {
+  position   : relative;
+  z-index    : 2;
+  text-align : center;
+  padding    : 0 2rem;
+  max-width  : 720px;
+}
+
+.hero-slide-content__eyebrow {
+  font-size      : 0.85rem;
+  font-weight    : 600;
+  letter-spacing : 0.25em;
+  text-transform : uppercase;
+  color          : var(--green);
+  margin-bottom  : 1rem;
+  opacity        : 0;
+  transform      : translateY(30px);
+  transition     : opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: 0s;
+}
+
+.hero-slide-content__title {
+  font-family  : var(--display);
+  font-size    : clamp(4rem, 8vw, 9rem);
+  line-height  : 0.92;
+  margin-bottom: 0.6rem;
+  opacity      : 0;
+  transform    : translateY(40px);
+  transition   : opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: 0.15s;
+}
+
+.hero-slide-content__title::after {
+  content          : '';
+  display          : block;
+  height           : 4px;
+  width            : 0;
+  background       : linear-gradient(90deg, var(--gold), var(--green));
+  margin           : 0.8rem auto 0;
+  border-radius    : 2px;
+  transition       : width 1s ease;
+  transition-delay : 0.9s;
+}
+
+.hero-slide-content__subtitle {
+  font-size        : 1.05rem;
+  color            : rgba(255, 255, 255, 0.72);
+  line-height      : 1.8;
+  margin-bottom    : 0.8rem;
+  opacity          : 0;
+  transform        : translateY(30px);
+  transition       : opacity 0.7s ease, transform 0.7s ease;
+  transition-delay : 0.35s;
+}
+
+.hero-slide-content__cta {
+  opacity          : 0;
+  transform        : translateY(20px);
+  transition       : opacity 0.6s ease, transform 0.6s ease;
+  transition-delay : 0.55s;
+}
+
+/* .slide-in est ajouté par JS après la fin de la vidéo */
+.hero-desktop__slide-panel.slide-in .hero-slide-content__eyebrow,
+.hero-desktop__slide-panel.slide-in .hero-slide-content__title,
+.hero-desktop__slide-panel.slide-in .hero-slide-content__subtitle,
+.hero-desktop__slide-panel.slide-in .hero-slide-content__cta {
+  opacity   : 1;
+  transform : translateY(0);
+}
+
+.hero-desktop__slide-panel.slide-in .hero-slide-content__title::after {
+  width : 160px;
+}
+
+
+/* ====================================================
+   5. HERO MOBILE
+   Vidéo 40vh en haut + texte en bas
+   Tout visible d'emblée, aucune transition
+==================================================== */
+
+.hero-mobile {
+  display        : none;
+  flex-direction : column;
+  min-height     : 100vh;
+}
+
+/* Zone vidéo */
+.hero-mobile__video {
+  position   : relative;
+  height     : 40vh;
+  min-height : 220px;
+  overflow   : hidden;
+  background : #000;
+  flex-shrink: 0;
+}
+
+.hero-mobile__video video {
+  position        : absolute;
+  inset           : 0;
+  width           : 100%;
+  height          : 100%;
+  object-fit      : cover;
+  object-position : center center;
+}
+
+/* Dégradé de transition vers le slide */
+.hero-mobile__video::after {
+  content    : '';
+  position   : absolute;
+  bottom     : 0;
+  left       : 0;
+  right      : 0;
+  height     : 60px;
+  background : linear-gradient(to bottom, transparent, var(--black));
+  z-index    : 1;
+}
+
+/* Zone texte */
+.hero-mobile__slide {
+  flex            : 1;
+  display         : flex;
+  flex-direction  : column;
+  align-items     : center;
+  justify-content : center;
+  text-align      : center;
+  padding         : 2rem 1.5rem 2.5rem;
+  background      : var(--black);
+  position        : relative;
+}
+
+.hero-mobile__slide::before {
+  content        : '';
+  position       : absolute;
+  inset          : 0;
+  background     : radial-gradient(ellipse 90% 60% at 50% 30%, rgba(245, 166, 35, 0.06) 0%, transparent 70%);
+  pointer-events : none;
+}
+
+.hero-mobile__eyebrow {
+  font-size      : 0.75rem;
+  font-weight    : 600;
+  letter-spacing : 0.2em;
+  text-transform : uppercase;
+  color          : var(--green);
+  margin-bottom  : 0.7rem;
+}
+
+.hero-mobile__title {
+  font-family   : var(--display);
+  font-size     : clamp(3rem, 14vw, 5rem);
+  line-height   : 0.92;
+  margin-bottom : 0.5rem;
+}
+
+.hero-mobile__title::after {
+  content       : '';
+  display       : block;
+  height        : 3px;
+  width         : 80px;
+  background    : linear-gradient(90deg, var(--gold), var(--green));
+  margin        : 0.6rem auto 0;
+  border-radius : 2px;
+}
+
+.hero-mobile__subtitle {
+  font-size     : 0.9rem;
+  color         : rgba(255, 255, 255, 0.65);
+  line-height   : 1.7;
+  margin-bottom : 1.2rem;
+}
+
+
+/* ====================================================
+   6. BADGE HALAL — Tampon incliné style Dameyo
+   Même énergie que le titre : bold, noir/or/vert
+   Décliné en deux versions : desktop et mobile
+==================================================== */
+
+/* Wrapper desktop */
+.halal-wrapper {
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  margin-bottom   : 2rem;
+  min-height      : 90px;
+  overflow        : visible;
+}
+
+/* Tampon commun */
+.halal-stamp {
+  display        : inline-flex;
+  flex-direction : column;
+  align-items    : center;
+  transform      : rotate(-4deg);
+  opacity        : 0;
+  scale          : 0.4;
+  transition     : opacity 0.5s ease, scale 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: 1.1s;
+}
+
+/* Apparition quand .slide-in est actif */
+.hero-desktop__slide-panel.slide-in .halal-stamp {
+  animation : stampIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.1s both,
+              stampFloat 4s ease-in-out 2s infinite;
+  opacity   : 1;
+  scale     : 1;
+}
+
+.hero-desktop__slide-panel.slide-in .halal-stamp__icon {
+  animation : iconSwing 2.5s ease-in-out 2s infinite;
+}
+
+/* Ligne principale : fond noir, texte or, bordure or */
+.halal-stamp__main {
+  font-family   : var(--display);
+  font-size     : clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: 0.15em;
+  color         : var(--gold);
+  background    : var(--black);
+  border        : 3px solid var(--gold);
+  border-bottom : none;
+  padding       : 0.4rem 1.4rem 0.3rem;
+  line-height   : 1;
+  white-space   : nowrap;
+  border-radius : 4px 4px 0 0;
+  box-shadow    : 4px 4px 0 rgba(245, 166, 35, 0.4);
+}
+
+.halal-stamp__icon {
+  display          : inline-block;
+  margin-right     : 0.3em;
+  transform-origin : center bottom;
+}
+
+/* Ligne secondaire : fond vert, texte noir */
+.halal-stamp__sub {
+  font-family   : var(--body);
+  font-size     : clamp(0.65rem, 1.2vw, 0.8rem);
+  font-weight   : 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color         : var(--black);
+  background    : var(--green);
+  border        : 3px solid var(--gold);
+  border-top    : 2px solid rgba(0, 0, 0, 0.25);
+  padding       : 0.25rem 1.2rem;
+  width         : 100%;
+  text-align    : center;
+  white-space   : nowrap;
+  border-radius : 0 0 4px 4px;
+  box-shadow    : 4px 4px 0 rgba(245, 166, 35, 0.4);
+}
+
+/* Version mobile du badge */
+.halal-stamp-mobile {
+  display        : inline-flex;
+  flex-direction : column;
+  align-items    : center;
+  transform      : rotate(-3deg);
+  margin-bottom  : 1.4rem;
+  animation      : stampIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both,
+                   stampFloat 4s ease-in-out 1.5s infinite;
+}
+
+.halal-stamp-mobile .halal-stamp__main {
+  font-size : clamp(1.2rem, 5vw, 1.6rem);
+  padding   : 0.3rem 1rem 0.25rem;
+}
+
+.halal-stamp-mobile .halal-stamp__sub {
+  font-size : clamp(0.58rem, 2.5vw, 0.72rem);
+  padding   : 0.2rem 0.9rem;
+}
+
+.halal-stamp-mobile .halal-stamp__icon {
+  display          : inline-block;
+  margin-right     : 0.25em;
+  transform-origin : center bottom;
+  animation        : iconSwing 2.5s ease-in-out 1.5s infinite;
+}
+
+
+/* ====================================================
+   7. INTRO — 3 BLOCS
+==================================================== */
+
+.intro {
+  background  : var(--grey);
+  padding     : 5rem 2rem;
+  border-top  : 3px solid var(--gold);
+}
+
+.intro__grid {
+  max-width             : 1100px;
+  margin                : 0 auto;
+  display               : grid;
+  grid-template-columns : repeat(3, 1fr);
+  gap                   : 2rem;
+}
+
+.intro__block {
+  text-align    : center;
+  padding       : 2rem;
+  border-radius : var(--radius);
+  transition    : transform var(--t), background var(--t);
+}
+
+.intro__block:hover {
+  transform  : translateY(-8px);
+  background : rgba(245, 166, 35, 0.07);
+}
+
+.intro__icon       { font-size: 3rem; display: block; margin-bottom: 1rem; }
+.intro__block h3   { font-family: var(--display); font-size: 1.6rem; color: var(--gold); margin-bottom: 0.5rem; }
+.intro__block p    { color: rgba(255, 255, 255, 0.6); font-size: 0.95rem; }
+
+
+/* ====================================================
+   8. MENU — ONGLETS + CARTES
+==================================================== */
+
+.menu-section { padding: 7rem 2rem; background: var(--black); }
+
+.menu-tabs {
+  display         : flex;
+  justify-content : center;
+  flex-wrap       : wrap;
+  gap             : 1rem;
+  margin-bottom   : 3rem;
+}
+
+.menu-tab {
+  font-family    : var(--display);
+  font-size      : 1rem;
+  letter-spacing : 0.1em;
+  padding        : 0.7rem 2rem;
+  background     : var(--grey);
+  color          : rgba(255, 255, 255, 0.6);
+  border         : 2px solid transparent;
+  border-radius  : 50px;
+  cursor         : pointer;
+  transition     : all var(--t);
+}
+
+.menu-tab:hover  { color: var(--white); border-color: var(--gold); }
+.menu-tab.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
+
+.menu-panels  { max-width: 1200px; margin: 0 auto; }
+.menu-panel   { display: none; animation: fadeIn 0.4s ease; }
+.menu-panel.active { display: block; }
+
+.menu-cards {
+  display               : grid;
+  grid-template-columns : repeat(2, 1fr);
+  gap                   : 2rem;
+}
+
+.menu-cards--single {
+  grid-template-columns : 1fr;
+  max-width             : 900px;
+  margin                : 0 auto;
+}
+
+.menu-card {
+  position      : relative;
+  border-radius : var(--radius);
+  overflow      : hidden;
+  border        : 2px solid rgba(245, 166, 35, 0.15);
+  box-shadow    : var(--shadow);
+  transition    : transform var(--t), border-color var(--t), box-shadow var(--t);
+}
+
+.menu-card:hover {
+  transform    : translateY(-6px) scale(1.01);
+  border-color : var(--gold);
+  box-shadow   : var(--glow);
+}
+
+.menu-card img             { width: 100%; transition: transform 0.6s ease; }
+.menu-card:hover img       { transform: scale(1.03); }
+
+
+/* ====================================================
+   9. OFFRES DU MOMENT
+==================================================== */
+
+.offers {
+  position   : relative;
+  padding    : 7rem 2rem;
+  background : var(--dark);
+}
+
+.offers::before {
+  content    : '';
+  position   : absolute;
+  top        : 0;
+  left       : 0;
+  right      : 0;
+  height     : 3px;
+  background : linear-gradient(90deg, transparent, var(--green), var(--gold), transparent);
+}
+
+.offers__grid {
+  max-width             : 1100px;
+  margin                : 0 auto;
+  display               : grid;
+  grid-template-columns : repeat(2, 1fr);
+  gap                   : 2rem;
+}
+
+.offer-card {
+  position      : relative;
+  border-radius : var(--radius);
+  overflow      : hidden;
+  box-shadow    : var(--shadow);
+  cursor        : pointer;
+  background    : var(--dark);
+  transition    : transform var(--t), box-shadow var(--t);
+}
+
+.offer-card:hover {
+  transform  : translateY(-8px) rotate(0.5deg);
+  box-shadow : 0 16px 48px rgba(245, 166, 35, 0.3);
+}
+
+.offer-card img {
+  width           : 100%;
+  height          : 100%;
+  object-fit      : contain;
+  object-position : center;
+  transition      : transform 0.6s ease;
+}
+
+.offer-card:hover img { transform: scale(1.04); }
+
+.offer-card__badge {
+  position       : absolute;
+  top            : 1rem;
+  right          : 1rem;
+  background     : var(--gold);
+  color          : var(--black);
+  font-family    : var(--display);
+  font-size      : 0.85rem;
+  letter-spacing : 0.1em;
+  padding        : 0.3rem 0.9rem;
+  border-radius  : 50px;
+  animation      : badgePulse 2s ease-in-out infinite;
+}
+
+
+/* ====================================================
+   10. AVIS GOOGLE
+==================================================== */
+
+.reviews { padding: 7rem 2rem; background: var(--black); }
+
+.reviews__summary {
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  gap             : 1.5rem;
+  margin-bottom   : 3rem;
+  flex-wrap       : wrap;
+}
+
+.reviews__score { font-family: var(--display); font-size: 5rem; color: var(--gold); line-height: 1; }
+.reviews__stars { font-size: 1.8rem; color: var(--gold); }
+.reviews__count { color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; margin-top: 0.3rem; }
+
+.reviews__grid {
+  max-width             : 1100px;
+  margin                : 0 auto;
+  display               : grid;
+  grid-template-columns : repeat(3, 1fr);
+  gap                   : 1.5rem;
+}
+
+.review-card {
+  background    : var(--grey);
+  border-radius : var(--radius);
+  padding       : 1.5rem;
+  border        : 1px solid rgba(245, 166, 35, 0.1);
+  display       : flex;
+  flex-direction: column;
+  gap           : 1rem;
+  transition    : transform var(--t), border-color var(--t);
+}
+
+.review-card:hover { transform: translateY(-5px); border-color: rgba(245, 166, 35, 0.4); }
+
+.review-card__header { display: flex; align-items: center; gap: 0.8rem; }
+
+.review-card__avatar {
+  width           : 44px;
+  height          : 44px;
+  border-radius   : 50%;
+  background      : var(--gold);
+  color           : var(--black);
+  font-family     : var(--display);
+  font-size       : 1.3rem;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  flex-shrink     : 0;
+}
+
+.review-card__name  { font-weight: 700; font-size: 0.95rem; }
+.review-card__date  { font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); margin-top: 2px; }
+.review-card__stars { color: var(--gold); }
+.review-card__text  { font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-style: italic; }
+
+.reviews__cta { text-align: center; margin-top: 2.5rem; }
+
+.reviews__cta a {
+  font-family    : var(--display);
+  font-size      : 1rem;
+  letter-spacing : 0.1em;
+  padding        : 0.7rem 2rem;
+  border-radius  : 50px;
+  border         : 2px solid var(--gold);
+  color          : var(--gold);
+  transition     : all 0.25s ease;
+}
+
+.reviews__cta a:hover { background: var(--gold); color: var(--black); }
+
+
+/* ====================================================
+   11. CONTACT + GOOGLE MAPS
+==================================================== */
+
+.contact { padding: 7rem 2rem; background: var(--grey); }
+
+.contact__grid {
+  max-width             : 1100px;
+  margin                : 0 auto;
+  display               : grid;
+  grid-template-columns : 1fr 1fr;
+  gap                   : 5rem;
+  align-items           : start;
+}
+
+.contact__info { display: flex; flex-direction: column; gap: 2rem; }
+.contact__item { display: flex; gap: 1rem; align-items: flex-start; }
+.contact__icon { font-size: 1.8rem; flex-shrink: 0; margin-top: 2px; }
+
+.contact__item strong {
+  display        : block;
+  font-family    : var(--display);
+  font-size      : 1.1rem;
+  letter-spacing : 0.05em;
+  color          : var(--gold);
+  margin-bottom  : 4px;
+}
+
+.contact__item p         { color: rgba(255, 255, 255, 0.6); font-size: 0.95rem; line-height: 1.7; }
+.contact__item a         { color: rgba(255, 255, 255, 0.6); transition: color 0.25s ease; }
+.contact__item a:hover   { color: var(--gold); }
+
+.contact__socials { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.social-btn {
+  font-family    : var(--display);
+  font-size      : 0.9rem;
+  letter-spacing : 0.1em;
+  padding        : 0.6rem 1.5rem;
+  border-radius  : 50px;
+  border         : 2px solid var(--gold);
+  color          : var(--gold);
+  transition     : all 0.25s ease;
+}
+
+.social-btn:hover { background: var(--gold); color: var(--black); transform: translateY(-2px); }
+
+.contact__map {
+  border-radius : var(--radius);
+  overflow      : hidden;
+  border        : 2px solid rgba(245, 166, 35, 0.2);
+  box-shadow    : var(--shadow);
+  height        : 420px;
+}
+
+.contact__map iframe { width: 100%; height: 100%; border: none; }
+
+
+/* ====================================================
+   12. FOOTER
+==================================================== */
+
+.footer {
+  background  : var(--black);
+  border-top  : 1px solid rgba(245, 166, 35, 0.2);
+  padding     : 2rem;
+}
+
+.footer__inner {
+  max-width       : 1100px;
+  margin          : 0 auto;
+  display         : flex;
+  align-items     : center;
+  justify-content : space-between;
+  flex-wrap       : wrap;
+  gap             : 1rem;
+}
+
+.footer__logo  { height: 34px; filter: brightness(0) invert(1); opacity: 0.7; }
+.footer__copy  { font-size: 0.85rem; color: rgba(255, 255, 255, 0.3); }
+.footer__nav   { display: flex; gap: 2rem; }
+
+.footer__nav a {
+  font-family    : var(--display);
+  font-size      : 0.85rem;
+  letter-spacing : 0.1em;
+  color          : rgba(255, 255, 255, 0.3);
+  transition     : color 0.25s ease;
+}
+
+.footer__nav a:hover { color: var(--gold); }
